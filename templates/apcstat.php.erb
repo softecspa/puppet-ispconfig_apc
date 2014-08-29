@@ -1,0 +1,39 @@
+<?php
+
+//$master=array("<%= masternode %>");
+<% if has_variable?('clusterslaves') then %>
+$slaves=array(<% clusterslaves.each do |val| -%>"<%= val %>",<% end -%>);
+<% else %>
+$slaves=array();
+<% end %>
+
+//$nodes=array_merge($master,$slaves);
+$nodes=$slaves;
+?>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="5">
+<?php
+foreach($nodes as $node)
+{
+?>
+<tr>
+    <td colspan="4"><h2><a href="http://<?php echo $node;?>/apc.php" style="color: black"><?php echo $node;?></a></h2></td>
+</tr>
+<tr>
+    <td colspan="2"><h4>Host Status Diagrams</h4></td>
+    <td><h4>Detailed Memory Usage and Fragmentation</h4></td>
+    <td>&nbsp;</td>
+</tr>
+<tr>
+    <td><a href="http://<?php echo $node;?>/apc.php"><img border="0" src="http://<?php echo $node;?>/apc.php?IMG=1"></a></td>
+    <td><a href="http://<?php echo $node;?>/apc.php"><img border="0" src="http://<?php echo $node;?>/apc.php?IMG=2"></a></td>
+    <td><a href="http://<?php echo $node;?>/apc.php"><img border="0" src="http://<?php echo $node;?>/apc.php?IMG=3"></a></td>
+    <td><a href="http://<?php echo $node;?>/apc.php?SCOPE=A&SORT1=H&SORT2=D&COUNT=20&CC=1&OB=1">clear cache on this node</a></td>
+</tr>
+<tr>
+    <td colspan="4"><hr></td>
+</tr>
+<?php
+}
+?>
+</table>
