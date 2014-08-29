@@ -28,7 +28,7 @@
 class ispconfig_apc (
   $enabled        = true,
   $apc_stat       = true,
-  $password       = '',
+  $password       = $::apc_stat_password,
   $num_files_hint = '5000',
   $ttl            = '3600',
   $shm_size       = '1024M',
