@@ -26,36 +26,19 @@
 #     password  => "yourpassword",
 #   }
 class ispconfig_apc (
-  $enabled        = true,
-  $apc_stat       = true,
   $password       = $::apc_stat_password,
-  $num_files_hint = '5000',
-  $ttl            = '3600',
-  $shm_size       = '1024M',
-  $rfc1867        = 'false',
-  $user_ttl       = '0',
-  $gc_ttl         = '3600',
+  $clusterslaves  = $clusterslaves,
   ) {
 
-  class { 'apc' :
-    enabled         => $enabled,
-    apc_stat        => $apc_stat,
-    apcdocroot      => '/var/www/sharedip',
-    password        => $password,
-    num_files_hint  => $num_files_hint,
-    ttl             => $ttl,
-    shm_size        => $shm_size,
-    rfc1867         => $rfc1867,
-    user_ttl        => $user_ttl,
-    gc_ttl          => $gc_ttl,
-  }
+  include softec_php::apc
 
   file { "/var/www/cluster.${cluster}.${clusterdomain}/web/apcstat.php":
     ensure  => 'present',
     content => template('ispconfig_apc/apcstat.php.erb'),
     owner   => 'root',
     group   => 'www-data',
-    mode    => '0440'
+    mode    => '0440',
+    require => Class['softec_php::apc']
   }
 
 }

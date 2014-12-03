@@ -1,13 +1,11 @@
 <?php
 
-//$master=array("<%= masternode %>");
-<% if has_variable?('clusterslaves') then %>
-$slaves=array(<% clusterslaves.each do |val| -%>"<%= val %>",<% end -%>);
-<% else %>
+<% if @clusterslaves -%>
+$slaves=array(<% @clusterslaves.each do |val| -%>"<%= val %>",<% end -%>);
+<% else -%>
 $slaves=array();
-<% end %>
+<% end -%>
 
-//$nodes=array_merge($master,$slaves);
 $nodes=$slaves;
 ?>
 
